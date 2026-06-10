@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Norah Jour et Nuit — Mostruários</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dark:#1C1C1E;--cream:#FAF7F4;--rose:#D4A5A5;--gold:#C9A84C;
+  --muted:#8A8A8E;--surface:#F0EBE6;--border:rgba(28,28,30,0.1);
+  --card:#FFFFFF;
+  --g:#2D7A4F;--g-bg:#E8F5EE;
+  --y:#A07800;--y-bg:#FFF8E1;--y-border:#EAB308;
+  --r:#B82020;--r-bg:#FEE8E8;
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);font-size:14px}
+.app{display:flex;height:100vh;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:230px;background:var(--dark);flex-shrink:0;display:flex;flex-direction:column}
+.sidebar-logo{padding:24px 20px 18px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
+.brand{font-family:'Playfair Display',serif;font-size:15px;color:#FAF7F4;letter-spacing:0.06em;line-height:1.4}
+.brand-sub{font-size:10px;color:rgba(250,247,244,0.35);letter-spacing:0.15em;text-transform:uppercase;margin-top:3px}
+.sidebar-nav{padding:14px 0;flex:1;overflow-y:auto}
+.nav-section{font-size:10px;color:rgba(250,247,244,0.25);letter-spacing:0.12em;text-transform:uppercase;padding:14px 20px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;color:rgba(250,247,244,0.5);cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;user-select:none}
+.nav-item:hover{color:rgba(250,247,244,0.85);background:rgba(255,255,255,0.04)}
+.nav-item.active{color:#FAF7F4;border-left-color:var(--gold);background:rgba(201,168,76,0.08)}
+.nav-item i{font-size:16px;flex-shrink:0}
+.nav-badge{background:var(--y-border);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;margin-left:auto;font-weight:600}
+.sidebar-footer{padding:14px 20px;border-top:0.5px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px}
+.avatar{width:30px;height:30px;border-radius:50%;background:rgba(212,165,165,0.2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--rose);font-weight:600;flex-shrink:0}
+.sidebar-user{font-size:12px;color:rgba(250,247,244,0.45)}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{background:var(--card);border-bottom:0.5px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.topbar-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:500;flex:1}
+.topbar-actions{display:flex;gap:8px}
+.content{flex:1;overflow-y:auto;padding:22px 24px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--border);background:transparent;color:var(--dark);transition:all 0.15s;font-family:'Inter',sans-serif;white-space:nowrap}
+.btn:hover{background:var(--surface)}
+.btn-primary{background:var(--dark);color:#FAF7F4;border-color:var(--dark)}
+.btn-primary:hover{background:#2e2e30}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-danger{border-color:var(--r);color:var(--r)}
+.btn-danger:hover{background:var(--r-bg)}
+
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.metric-card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:16px}
+.metric-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:7px}
+.metric-value{font-size:23px;font-weight:500;line-height:1}
+.metric-sub{font-size:12px;color:var(--muted);margin-top:5px}
+.accent-green{border-left:3px solid var(--g)}
+.accent-yellow{border-left:3px solid var(--y-border)}
+.accent-red{border-left:3px solid var(--r)}
+
+/* STATUS */
+.dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;display:inline-block}
+.dot-g{background:var(--g)}
+.dot-y{background:var(--y-border)}
+.dot-r{background:var(--r)}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:500}
+.tag-g{background:var(--g-bg);color:var(--g)}
+.tag-y{background:var(--y-bg);color:var(--y)}
+.tag-r{background:var(--r-bg);color:var(--r)}
+
+/* FILTERS */
+.filters-row{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;font-size:12px;border:0.5px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;transition:all 0.15s;user-select:none}
+.chip:hover:not(.chip-active){background:var(--surface)}
+.chip-active{background:var(--dark);color:#FAF7F4;border-color:var(--dark)}
+.filter-sep{flex:1}
+.view-toggle{display:flex;border:0.5px solid var(--border);border-radius:8px;overflow:hidden}
+.vbtn{padding:6px 10px;background:transparent;border:none;cursor:pointer;color:var(--muted);transition:all 0.15s;line-height:1}
+.vbtn.active{background:var(--dark);color:#FAF7F4}
+.fselect{padding:6px 14px;border-radius:20px;font-size:12px;border:0.5px solid var(--border);background:var(--card);color:var(--muted);font-family:'Inter',sans-serif;cursor:pointer;outline:none}
+
+/* GRID */
+.grid-view{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.piece-card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.18s;position:relative}
+.piece-card:hover{border-color:rgba(28,28,30,0.22);transform:translateY(-2px);box-shadow:0 4px 16px rgba(28,28,30,0.08)}
+.piece-photo{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.piece-placeholder{width:100%;aspect-ratio:3/4;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.piece-placeholder i{font-size:32px;color:var(--rose)}
+.piece-placeholder span{font-size:11px;color:var(--muted)}
+.status-badge{position:absolute;top:10px;right:10px;width:14px;height:14px;border-radius:50%;border:2.5px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.18)}
+.badge-g{background:var(--g)}
+.badge-y{background:var(--y-border)}
+.badge-r{background:var(--r)}
+.piece-info{padding:10px 12px 12px}
+.piece-ref{font-size:12px;font-weight:600;color:var(--dark);margin-bottom:2px}
+.piece-meta{font-size:11px;color:var(--muted);margin-bottom:6px}
+.piece-price{font-size:14px;font-weight:500;color:var(--dark)}
+
+/* LIST */
+.list-wrap{background:var(--card);border:0.5px solid var(--border);border-radius:12px;overflow:hidden}
+.list-row{display:grid;grid-template-columns:18px 52px 1fr 110px 130px 100px 100px 90px 40px;align-items:center;gap:10px;padding:9px 14px;border-bottom:0.5px solid var(--border);transition:background 0.1s;cursor:pointer}
+.list-row:last-child{border-bottom:none}
+.list-row:hover:not(.list-head){background:var(--surface)}
+.list-head{background:var(--surface);cursor:default!important;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:500}
+.list-thumb{width:38px;height:50px;border-radius:5px;object-fit:cover;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface)}
+.list-thumb i{font-size:16px;color:var(--rose)}
+.list-thumb img{width:100%;height:100%;object-fit:cover}
+
+/* PANELS */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.panel{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:18px}
+.panel-title{font-size:13px;font-weight:500;margin-bottom:14px;display:flex;align-items:center;gap:7px;color:var(--dark)}
+.panel-title i{font-size:16px;color:var(--rose)}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12px}
+.bar-label{width:110px;color:var(--muted);text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;background:var(--surface);border-radius:20px;height:7px;overflow:hidden}
+.bar-fill{height:100%;border-radius:20px;background:var(--rose)}
+.bar-fill-gold{background:var(--gold)}
+.bar-val{width:80px;font-weight:500;color:var(--dark);font-size:12px;text-align:right}
+
+/* ALERT BANNER */
+.alert-banner{background:var(--y-bg);border:0.5px solid var(--y-border);border-radius:10px;padding:10px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:13px;color:var(--y)}
+.alert-banner i{font-size:16px;flex-shrink:0}
+.alert-link{font-weight:500;cursor:pointer;text-decoration:underline;margin-left:4px}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty i{font-size:44px;margin-bottom:14px;display:block;color:var(--rose);opacity:0.6}
+.empty h3{font-size:16px;font-weight:500;color:var(--dark);margin-bottom:8px}
+.empty p{font-size:13px;line-height:1.6}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;align-items:center;justify-content:center;padding:20px}
+.overlay.open{display:flex}
+.modal{background:var(--card);border-radius:14px;width:580px;max-width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:22px 24px 0}
+.modal-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:500}
+.modal-body{padding:20px 24px 24px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;padding:16px 24px;border-top:0.5px solid var(--border)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-full{grid-column:1/-1}
+.fgroup{display:flex;flex-direction:column;gap:5px}
+.flabel{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+.finput{padding:9px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);outline:none;transition:border 0.15s;width:100%}
+.finput:focus{border-color:var(--dark)}
+.status-row{display:flex;gap:8px}
+.sopt{flex:1;padding:9px 6px;border:0.5px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.15s;color:var(--muted)}
+.sopt:hover{background:var(--surface)}
+.sopt.sel-g{border-color:var(--g);background:var(--g-bg);color:var(--g)}
+.sopt.sel-y{border-color:var(--y-border);background:var(--y-bg);color:var(--y)}
+.sopt.sel-r{border-color:var(--r);background:var(--r-bg);color:var(--r)}
+.upload-zone{border:1.5px dashed rgba(28,28,30,0.15);border-radius:8px;padding:18px;text-align:center;cursor:pointer;font-size:13px;background:var(--cream);transition:all 0.15s;color:var(--muted)}
+.upload-zone:hover{border-color:var(--rose);background:var(--surface)}
+.upload-zone i{font-size:26px;margin-bottom:7px;display:block;color:var(--rose)}
+.photo-preview{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:none}
+
+/* DETAIL MODAL */
+.detail-photo{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center}
+.detail-photo-img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px}
+.detail-photo-ph{width:100%;aspect-ratio:3/4;background:var(--surface);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--muted)}
+.detail-photo-ph i{font-size:40px;color:var(--rose)}
+.detail-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start}
+.detail-fields{display:flex;flex-direction:column;gap:12px}
+.detail-field{display:flex;flex-direction:column;gap:3px}
+.detail-field label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+.detail-field span{font-size:14px;color:var(--dark)}
+.history-item{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:12px}
+.history-item:last-child{border-bottom:none}
+.history-time{color:var(--muted);white-space:nowrap;flex-shrink:0}
+.history-text{color:var(--dark)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--dark);color:#FAF7F4;padding:12px 18px;border-radius:10px;font-size:13px;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.2);display:flex;align-items:center;gap:8px;transform:translateY(20px);opacity:0;transition:all 0.25s}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* CONFIRM */
+.confirm-modal{background:var(--card);border-radius:12px;width:340px;padding:24px}
+.confirm-title{font-size:16px;font-weight:500;margin-bottom:8px}
+.confirm-text{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+
+/* TABS */
+.tabs{display:flex;border-bottom:0.5px solid var(--border);margin-bottom:18px}
+.tab{padding:10px 18px;font-size:13px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;margin-bottom:-0.5px}
+.tab.active{color:var(--dark);border-bottom-color:var(--gold);font-weight:500}
+
+/* SECTION HEADER */
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.section-hdr-title{font-size:14px;font-weight:500}
+
+/* COMBOBOX (coleção / fornecedor inline) */
+.combo-wrap{position:relative}
+.combo-input-row{display:flex;gap:6px}
+.combo-input-row .finput{flex:1}
+.combo-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--card);border:0.5px solid var(--border);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.1);z-index:400;max-height:200px;overflow-y:auto;display:none}
+.combo-dropdown.open{display:block}
+.combo-opt{padding:9px 12px;font-size:13px;cursor:pointer;transition:background 0.1s}
+.combo-opt:hover{background:var(--surface)}
+.combo-opt.combo-add{color:var(--rose);font-weight:500;border-top:0.5px solid var(--border);display:flex;align-items:center;gap:6px}
+.combo-opt.combo-empty{color:var(--muted);font-size:12px;cursor:default}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(28,28,30,0.15);border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="brand">Norah<br>Jour et Nuit</div>
+      <div class="brand-sub">Gestão de mostruários</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-item active" data-page="dashboard"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
+      <div class="nav-item" data-page="pecas"><i class="ti ti-shirt"></i> Mostruários</div>
+      <div class="nav-item" data-page="alertas"><i class="ti ti-bell"></i> Alertas <span class="nav-badge" id="alert-count" style="display:none">0</span></div>
+      <div class="nav-section">Relatórios</div>
+      <div class="nav-item" data-page="por-colecao"><i class="ti ti-layers"></i> Por coleção</div>
+      <div class="nav-item" data-page="por-fornecedor"><i class="ti ti-building-store"></i> Por fornecedor</div>
+      <div class="nav-section">Cadastros</div>
+      <div class="nav-item" data-page="colecoes"><i class="ti ti-tag"></i> Coleções</div>
+      <div class="nav-item" data-page="fornecedores-cad"><i class="ti ti-users"></i> Fornecedores</div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="avatar">NJ</div>
+      <div class="sidebar-user">Norah Jour et Nuit</div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="page-title">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="btn" id="btn-export-excel" style="display:none" onclick="exportExcel()"><i class="ti ti-file-spreadsheet"></i> Excel</button>
+        <button class="btn" id="btn-export-pdf" style="display:none" onclick="exportPDF()"><i class="ti ti-file-type-pdf"></i> PDF</button>
+        <button class="btn btn-primary" id="btn-nova-peca" onclick="openNewPieceModal()"><i class="ti ti-plus"></i> Nova peça</button>
+      </div>
+    </div>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<!-- MODAL CADASTRO / EDIÇÃO -->
+<div class="overlay" id="modal-piece">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-piece-title">Cadastrar peça</div>
+      <button class="btn btn-sm" onclick="closeModal('modal-piece')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="piece-id">
+      <div class="form-grid">
+        <div class="fgroup form-full" style="align-items:center">
+          <div class="upload-zone" id="photo-zone" onclick="document.getElementById('photo-input').click()">
+            <i class="ti ti-camera"></i>
+            <div>Clique para adicionar foto da peça</div>
+            <div style="font-size:11px;margin-top:4px;color:var(--muted)">JPG, PNG, WEBP</div>
+          </div>
+          <img id="photo-preview" class="photo-preview" alt="Prévia da foto">
+          <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)">
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Referência</label>
+          <input class="finput" id="f-ref" placeholder="Ex: NJ-V25-001">
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Coleção</label>
+          <div class="combo-wrap" id="combo-wrap-colecao">
+            <input class="finput" id="f-colecao" placeholder="Selecione ou digite..." autocomplete="off"
+              oninput="comboFilter('colecao')" onfocus="comboOpen('colecao')" onblur="comboBlur('colecao')">
+            <div class="combo-dropdown" id="combo-drop-colecao"></div>
+          </div>
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Fornecedor</label>
+          <div class="combo-wrap" id="combo-wrap-fornecedor">
+            <input class="finput" id="f-fornecedor" placeholder="Selecione ou digite..." autocomplete="off"
+              oninput="comboFilter('fornecedor')" onfocus="comboOpen('fornecedor')" onblur="comboBlur('fornecedor')">
+            <div class="combo-dropdown" id="combo-drop-fornecedor"></div>
+          </div>
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Categoria</label>
+          <select class="finput" id="f-categoria">
+            <option value="">Selecione...</option>
+            <option>Vestido</option><option>Blusa</option><option>Calça</option>
+            <option>Saia</option><option>Conjunto</option><option>Casaco</option>
+            <option>Acessório</option><option>Outro</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Tamanho</label>
+          <input class="finput" id="f-tamanho" placeholder="P, M, G, 38...">
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Data de recebimento</label>
+          <input type="date" class="finput" id="f-data">
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Responsável pelo recebimento</label>
+          <input class="finput" id="f-responsavel" placeholder="Nome">
+        </div>
+        <div class="fgroup form-full" style="border-top:0.5px solid var(--border);padding-top:14px;margin-top:2px">
+          <div class="flabel" style="margin-bottom:8px">Status da cobrança</div>
+          <div class="status-row">
+            <div class="sopt" id="sopt-y" onclick="selectStatus('y')"><div class="dot dot-y"></div> Aguardando cobrança</div>
+            <div class="sopt" id="sopt-g" onclick="selectStatus('g')"><div class="dot dot-g"></div> Cobrado e pago</div>
+            <div class="sopt" id="sopt-r" onclick="selectStatus('r')"><div class="dot dot-r"></div> Pendência / Divergência</div>
+          </div>
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Número da NF-e</label>
+          <input class="finput" id="f-nfe" placeholder="00000">
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Número do romaneio</label>
+          <input class="finput" id="f-romaneio" placeholder="00000">
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Valor cobrado (R$)</label>
+          <input type="number" step="0.01" class="finput" id="f-valor" placeholder="0,00">
+        </div>
+        <div class="fgroup">
+          <label class="flabel">Data de pagamento</label>
+          <input type="date" class="finput" id="f-data-pag">
+        </div>
+        <div class="fgroup form-full">
+          <label class="flabel">Observações / Divergências</label>
+          <textarea class="finput" id="f-obs" rows="3" placeholder="Informe qualquer divergência, pendência ou detalhe importante..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-piece')">Cancelar</button>
+      <button class="btn btn-primary" onclick="savePiece()"><i class="ti ti-check"></i> Salvar peça</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DETALHE -->
+<div class="overlay" id="modal-detail">
+  <div class="modal" style="width:660px">
+    <div class="modal-header">
+      <div class="modal-title" id="detail-title">Detalhe da peça</div>
+      <button class="btn btn-sm" onclick="closeModal('modal-detail')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" id="detail-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="btn-delete-piece" onclick="confirmDelete()"><i class="ti ti-trash"></i> Excluir</button>
+      <div style="flex:1"></div>
+      <button class="btn" onclick="closeModal('modal-detail')">Fechar</button>
+      <button class="btn btn-primary" id="btn-edit-piece" onclick="editFromDetail()"><i class="ti ti-edit"></i> Editar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONFIRMAÇÃO DELETE -->
+<div class="overlay" id="modal-confirm">
+  <div class="confirm-modal">
+    <div class="confirm-title">Excluir peça</div>
+    <div class="confirm-text">Tem certeza que deseja excluir esta peça? Esta ação não pode ser desfeita.</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" onclick="closeModal('modal-confirm')">Cancelar</button>
+      <button class="btn btn-danger" onclick="deletePiece()"><i class="ti ti-trash"></i> Excluir</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL COLEÇÃO -->
+<div class="overlay" id="modal-colecao">
+  <div class="confirm-modal">
+    <div class="confirm-title" id="modal-colecao-title">Nova coleção</div>
+    <div style="margin-bottom:16px">
+      <input type="hidden" id="colecao-edit-id">
+      <label class="flabel" style="margin-bottom:5px;display:block">Nome da coleção</label>
+      <input class="finput" id="colecao-nome" placeholder="Ex: Verão 2026">
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" onclick="closeModal('modal-colecao')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveColecao()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FORNECEDOR -->
+<div class="overlay" id="modal-fornecedor">
+  <div class="confirm-modal">
+    <div class="confirm-title" id="modal-forn-title">Novo fornecedor</div>
+    <div style="margin-bottom:16px;display:flex;flex-direction:column;gap:10px">
+      <input type="hidden" id="forn-edit-id">
+      <div>
+        <label class="flabel" style="margin-bottom:5px;display:block">Nome do fornecedor *</label>
+        <input class="finput" id="forn-nome" placeholder="Nome da empresa">
+      </div>
+      <div>
+        <label class="flabel" style="margin-bottom:5px;display:block">Contato</label>
+        <input class="finput" id="forn-contato" placeholder="E-mail ou telefone">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" onclick="closeModal('modal-fornecedor')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveFornecedor()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="ti ti-check"></i> <span id="toast-msg"></span></div>
+
+<script>
+// ─── STORAGE ────────────────────────────────────────────────────
+const DB = {
+  get(k){ try{ return JSON.parse(localStorage.getItem('norah_'+k)||'null') }catch(e){return null} },
+  set(k,v){ localStorage.setItem('norah_'+k, JSON.stringify(v)) },
+  init(){
+    if(!this.get('pieces')) this.set('pieces',[]);
+    if(!this.get('colecoes')) this.set('colecoes',[]);
+    if(!this.get('fornecedores')) this.set('fornecedores',[]);
+  }
+};
+DB.init();
+
+let pieces = () => DB.get('pieces') || [];
+let colecoes = () => DB.get('colecoes') || [];
+let fornecedores = () => DB.get('fornecedores') || [];
+
+// ─── STATE ───────────────────────────────────────────────────────
+let currentPage = 'dashboard';
+let filterStatus = 'all';
+let filterColecao = '';
+let filterFornecedor = '';
+let filterCategoria = '';
+let currentView = 'grid';
+let editingId = null;
+let detailId = null;
+let selectedStatus = 'y';
+let photoData = null;
+
+// ─── HELPERS ─────────────────────────────────────────────────────
+const fmtBRL = v => v ? 'R$ ' + Number(v).toLocaleString('pt-BR', {minimumFractionDigits:2}) : '—';
+const fmtDate = d => d ? new Date(d+'T12:00:00').toLocaleDateString('pt-BR') : '—';
+const statusLabel = {g:'Pago',y:'Aguardando cobrança',r:'Pendência / Divergência'};
+const catIcon = {Vestido:'ti-dress',Blusa:'ti-shirt',Calça:'ti-box',Saia:'ti-box',Conjunto:'ti-box',Casaco:'ti-wind',Acessório:'ti-sparkles'};
+const getCatIcon = c => catIcon[c] || 'ti-shirt';
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2);
+const daysAgo = d => d ? Math.floor((Date.now()-new Date(d+'T12:00:00').getTime())/(1000*60*60*24)) : 0;
+
+function toast(msg, type='ok'){
+  const el = document.getElementById('toast');
+  const ico = el.querySelector('i');
+  ico.className = type==='err' ? 'ti ti-alert-circle' : 'ti ti-check';
+  document.getElementById('toast-msg').textContent = msg;
+  el.style.background = type==='err' ? '#B82020' : 'var(--dark)';
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+function updateAlertBadge(){
+  const ps = pieces();
+  const n = ps.filter(p=>p.status==='y' && daysAgo(p.data)>30).length;
+  const badge = document.getElementById('alert-count');
+  if(n>0){ badge.textContent=n; badge.style.display=''; }
+  else badge.style.display='none';
+}
+
+// ─── NAVIGATION ──────────────────────────────────────────────────
+const pageTitles = {
+  dashboard:'Dashboard', pecas:'Mostruários', alertas:'Alertas',
+  'por-colecao':'Relatório por coleção', 'por-fornecedor':'Relatório por fornecedor',
+  colecoes:'Coleções', 'fornecedores-cad':'Fornecedores'
+};
+
+document.querySelectorAll('.nav-item[data-page]').forEach(el=>{
+  el.addEventListener('click',()=>navigate(el.dataset.page));
+});
+
+function navigate(page){
+  currentPage = page;
+  document.querySelectorAll('.nav-item[data-page]').forEach(el=>el.classList.toggle('active',el.dataset.page===page));
+  document.getElementById('page-title').textContent = pageTitles[page]||page;
+  const showExport = ['por-colecao','por-fornecedor','pecas'].includes(page);
+  document.getElementById('btn-export-excel').style.display = showExport?'':'none';
+  document.getElementById('btn-export-pdf').style.display = showExport?'':'none';
+  document.getElementById('btn-nova-peca').style.display = ['colecoes','fornecedores-cad'].includes(page)?'none':'';
+  updateAlertBadge();
+  render();
+}
+
+// ─── RENDER ROUTER ───────────────────────────────────────────────
+function render(){
+  const el = document.getElementById('content');
+  const pages = {
+    dashboard: renderDashboard,
+    pecas: renderPecas,
+    alertas: renderAlertas,
+    'por-colecao': renderPorColecao,
+    'por-fornecedor': renderPorFornecedor,
+    colecoes: renderColecoes,
+    'fornecedores-cad': renderFornecedoresCad
+  };
+  if(pages[currentPage]) pages[currentPage](el);
+}
+
+// ─── DASHBOARD ───────────────────────────────────────────────────
+function renderDashboard(el){
+  const ps = pieces();
+  const total = ps.reduce((s,p)=>s+Number(p.valor||0),0);
+  const pago = ps.filter(p=>p.status==='g').reduce((s,p)=>s+Number(p.valor||0),0);
+  const aguardando = ps.filter(p=>p.status==='y').reduce((s,p)=>s+Number(p.valor||0),0);
+  const diverg = ps.filter(p=>p.status==='r').reduce((s,p)=>s+Number(p.valor||0),0);
+  const ng=ps.filter(p=>p.status==='g').length;
+  const ny=ps.filter(p=>p.status==='y').length;
+  const nr=ps.filter(p=>p.status==='r').length;
+  const alertCount = ps.filter(p=>p.status==='y'&&daysAgo(p.data)>30).length;
+
+  const fornMap = {};
+  ps.forEach(p=>{ if(p.fornecedor){ fornMap[p.fornecedor]=(fornMap[p.fornecedor]||0)+Number(p.valor||0); } });
+  const fSorted = Object.entries(fornMap).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const maxF = fSorted[0]?fSorted[0][1]:1;
+
+  const colMap = {};
+  ps.forEach(p=>{ if(p.colecao){ colMap[p.colecao]=(colMap[p.colecao]||0)+Number(p.valor||0); } });
+  const maxC = Object.values(colMap).reduce((m,v)=>Math.max(m,v),1);
+
+  el.innerHTML = `
+    ${alertCount>0?`<div class="alert-banner"><i class="ti ti-clock-exclamation"></i> ${alertCount} ${alertCount===1?'peça aguarda':'peças aguardam'} cobrança há mais de 30 dias. <span class="alert-link" onclick="navigate('alertas')">Ver alertas</span></div>`:''}
+    ${ps.length===0?`<div class="empty"><i class="ti ti-shirt"></i><h3>Nenhuma peça cadastrada ainda</h3><p>Clique em "Nova peça" para começar a controlar seus mostruários.</p></div>`:`
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total mostruários</div>
+        <div class="metric-value">${fmtBRL(total)}</div>
+        <div class="metric-sub">${ps.length} ${ps.length===1?'peça':'peças'} cadastradas</div>
+      </div>
+      <div class="metric-card accent-green">
+        <div class="metric-label">Cobrado e pago</div>
+        <div class="metric-value" style="color:var(--g)">${fmtBRL(pago)}</div>
+        <div class="metric-sub">${ng} ${ng===1?'peça':'peças'}</div>
+      </div>
+      <div class="metric-card accent-yellow">
+        <div class="metric-label">Aguardando cobrança</div>
+        <div class="metric-value" style="color:var(--y)">${fmtBRL(aguardando)}</div>
+        <div class="metric-sub">${ny} ${ny===1?'peça':'peças'}</div>
+      </div>
+      <div class="metric-card accent-red">
+        <div class="metric-label">Pendência / Divergência</div>
+        <div class="metric-value" style="color:var(--r)">${fmtBRL(diverg)}</div>
+        <div class="metric-sub">${nr} ${nr===1?'peça':'peças'}</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title"><i class="ti ti-building-store"></i> Ranking de fornecedores</div>
+        ${fSorted.length===0?`<div style="color:var(--muted);font-size:13px">Nenhum dado ainda.</div>`:fSorted.map(([f,v])=>`<div class="bar-row"><div class="bar-label">${f}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/maxF*100)}%"></div></div><div class="bar-val">${fmtBRL(v)}</div></div>`).join('')}
+      </div>
+      <div class="panel">
+        <div class="panel-title"><i class="ti ti-layers"></i> Por coleção</div>
+        ${Object.keys(colMap).length===0?`<div style="color:var(--muted);font-size:13px">Nenhum dado ainda.</div>`:Object.entries(colMap).map(([c,v])=>`<div class="bar-row"><div class="bar-label">${c}</div><div class="bar-track"><div class="bar-fill bar-fill-gold" style="width:${Math.round(v/maxC*100)}%"></div></div><div class="bar-val">${fmtBRL(v)}</div></div>`).join('')}
+        <div style="display:flex;gap:14px;margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div class="dot dot-g"></div> Pago (${ng})</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div class="dot dot-y"></div> Aguardando (${ny})</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div class="dot dot-r"></div> Pendência (${nr})</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-hdr">
+      <div class="section-hdr-title">Últimas peças cadastradas</div>
+      <span style="font-size:12px;color:var(--rose);cursor:pointer" onclick="navigate('pecas')">Ver todas →</span>
+    </div>
+    <div class="grid-view">${renderCards([...ps].reverse().slice(0,8))}</div>
+    `}
+  `;
+}
+
+// ─── PEÇAS ───────────────────────────────────────────────────────
+function renderPecas(el){
+  const ps = pieces();
+  const filtered = getFiltered(ps);
+  const cols = [...new Set(ps.map(p=>p.colecao).filter(Boolean))];
+  const forns = [...new Set(ps.map(p=>p.fornecedor).filter(Boolean))];
+  const cats = ['Vestido','Blusa','Calça','Saia','Conjunto','Casaco','Acessório','Outro'];
+
+  el.innerHTML = `
+    <div class="filters-row">
+      <div class="chip ${filterStatus==='all'?'chip-active':''}" onclick="setFilter('all')">Todas (${ps.length})</div>
+      <div class="chip ${filterStatus==='g'?'chip-active':''}" onclick="setFilter('g')"><div class="dot dot-g" style="width:8px;height:8px"></div> Pagas (${ps.filter(p=>p.status==='g').length})</div>
+      <div class="chip ${filterStatus==='y'?'chip-active':''}" onclick="setFilter('y')"><div class="dot dot-y" style="width:8px;height:8px"></div> Aguardando (${ps.filter(p=>p.status==='y').length})</div>
+      <div class="chip ${filterStatus==='r'?'chip-active':''}" onclick="setFilter('r')"><div class="dot dot-r" style="width:8px;height:8px"></div> Pendências (${ps.filter(p=>p.status==='r').length})</div>
+      ${cols.length?`<select class="fselect" onchange="filterColecao=this.value;render()"><option value="">Todas as coleções</option>${cols.map(c=>`<option ${filterColecao===c?'selected':''} value="${c}">${c}</option>`).join('')}</select>`:''}
+      ${forns.length?`<select class="fselect" onchange="filterFornecedor=this.value;render()"><option value="">Todos os fornecedores</option>${forns.map(f=>`<option ${filterFornecedor===f?'selected':''} value="${f}">${f}</option>`).join('')}</select>`:''}
+      <div class="filter-sep"></div>
+      <div class="view-toggle">
+        <button class="vbtn ${currentView==='grid'?'active':''}" onclick="currentView='grid';render()" title="Grade"><i class="ti ti-layout-grid"></i></button>
+        <button class="vbtn ${currentView==='list'?'active':''}" onclick="currentView='list';render()" title="Lista"><i class="ti ti-list"></i></button>
+      </div>
+    </div>
+    ${filtered.length===0&&ps.length===0?`<div class="empty"><i class="ti ti-shirt"></i><h3>Nenhuma peça cadastrada</h3><p>Clique em "Nova peça" para cadastrar o primeiro mostruário.</p></div>`:
+      filtered.length===0?`<div class="empty"><i class="ti ti-search"></i><h3>Nenhuma peça encontrada</h3><p>Tente remover os filtros aplicados.</p></div>`:
+      currentView==='grid'?`<div class="grid-view">${renderCards(filtered)}</div>`:renderList(filtered)
+    }
+  `;
+}
+
+function getFiltered(ps){
+  return ps.filter(p=>{
+    if(filterStatus!=='all'&&p.status!==filterStatus) return false;
+    if(filterColecao&&p.colecao!==filterColecao) return false;
+    if(filterFornecedor&&p.fornecedor!==filterFornecedor) return false;
+    if(filterCategoria&&p.categoria!==filterCategoria) return false;
+    return true;
+  }).reverse();
+}
+
+function setFilter(s){ filterStatus=s; render(); }
+
+function renderCards(arr){
+  return arr.map(p=>`
+    <div class="piece-card" onclick="openDetail('${p.id}')">
+      ${p.photo
+        ? `<img class="piece-photo" src="${p.photo}" alt="${p.ref}" loading="lazy">`
+        : `<div class="piece-placeholder"><i class="ti ${getCatIcon(p.categoria)}"></i><span>${p.categoria||'Sem categoria'}</span></div>`
+      }
+      <div class="status-badge badge-${p.status}" title="${statusLabel[p.status]}"></div>
+      <div class="piece-info">
+        <div class="piece-ref">${p.ref||'Sem referência'}</div>
+        <div class="piece-meta">${[p.fornecedor,p.tamanho].filter(Boolean).join(' · ')||'—'}</div>
+        <div class="piece-price">${p.valor?fmtBRL(p.valor):'Sem valor'}</div>
+        <div style="margin-top:6px"><span class="tag tag-${p.status}"><div class="dot dot-${p.status}" style="width:6px;height:6px"></div>${statusLabel[p.status]}</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderList(arr){
+  return `<div class="list-wrap">
+    <div class="list-row list-head">
+      <div></div><div></div><div>Referência</div><div>Coleção</div><div>Fornecedor</div><div>Categoria</div><div>Valor</div><div>NF-e</div><div></div>
+    </div>
+    ${arr.map(p=>`
+    <div class="list-row" onclick="openDetail('${p.id}')">
+      <div><div class="dot dot-${p.status}" style="margin:auto"></div></div>
+      <div class="list-thumb">${p.photo?`<img src="${p.photo}" alt="${p.ref}">`:`<i class="ti ${getCatIcon(p.categoria)}"></i>`}</div>
+      <div><div style="font-weight:500;font-size:13px">${p.ref||'—'}</div><div style="font-size:11px;color:var(--muted)">${p.tamanho||''} ${p.data?'· '+fmtDate(p.data):''}</div></div>
+      <div style="font-size:12px;color:var(--muted)">${p.colecao||'—'}</div>
+      <div style="font-size:13px">${p.fornecedor||'—'}</div>
+      <div style="font-size:12px;color:var(--muted)">${p.categoria||'—'}</div>
+      <div style="font-weight:500;font-size:13px">${p.valor?fmtBRL(p.valor):'—'}</div>
+      <div style="font-size:12px;color:var(--muted)">${p.nfe||'—'}</div>
+      <div><span class="tag tag-${p.status}" style="font-size:10px">${p.status==='g'?'Pago':p.status==='y'?'Aguardando':'Pendência'}</span></div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ─── ALERTAS ─────────────────────────────────────────────────────
+function renderAlertas(el){
+  const ps = pieces().filter(p=>p.status==='y'&&daysAgo(p.data)>30);
+  el.innerHTML = ps.length===0
+    ? `<div class="empty"><i class="ti ti-bell-off"></i><h3>Nenhum alerta no momento</h3><p>Todas as peças foram cobradas dentro do prazo ou ainda estão no período de 30 dias.</p></div>`
+    : `<div style="margin-bottom:14px;font-size:13px;color:var(--muted)">${ps.length} ${ps.length===1?'peça aguarda':'peças aguardam'} cobrança há mais de 30 dias.</div>
+    <div class="list-wrap">
+      <div class="list-row list-head" style="grid-template-columns:18px 52px 1fr 130px 130px 100px 80px 120px">
+        <div></div><div></div><div>Referência</div><div>Coleção</div><div>Fornecedor</div><div>Valor</div><div>Dias</div><div>Ação</div>
+      </div>
+      ${ps.map(p=>`
+      <div class="list-row" style="grid-template-columns:18px 52px 1fr 130px 130px 100px 80px 120px">
+        <div><div class="dot dot-y" style="margin:auto"></div></div>
+        <div class="list-thumb">${p.photo?`<img src="${p.photo}" alt="${p.ref}">`:`<i class="ti ${getCatIcon(p.categoria)}"></i>`}</div>
+        <div><div style="font-weight:500">${p.ref||'—'}</div><div style="font-size:11px;color:var(--muted)">${p.categoria||''}</div></div>
+        <div style="font-size:12px;color:var(--muted)">${p.colecao||'—'}</div>
+        <div style="font-size:13px">${p.fornecedor||'—'}</div>
+        <div style="font-weight:500">${fmtBRL(p.valor)}</div>
+        <div style="font-weight:600;color:var(--r)">${daysAgo(p.data)}d</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-sm" onclick="event.stopPropagation();openDetail('${p.id}')"><i class="ti ti-eye"></i></button>
+          <button class="btn btn-sm" style="color:var(--g);border-color:var(--g)" onclick="event.stopPropagation();quickPaid('${p.id}')"><i class="ti ti-check"></i> Pago</button>
+        </div>
+      </div>`).join('')}
+    </div>`;
+}
+
+function quickPaid(id){
+  const ps = pieces();
+  const idx = ps.findIndex(p=>p.id===id);
+  if(idx>=0){
+    ps[idx].status='g';
+    ps[idx].history = ps[idx].history||[];
+    ps[idx].history.push({action:'Status alterado para Pago (alerta)',date:new Date().toISOString()});
+    DB.set('pieces',ps);
+    updateAlertBadge();
+    render();
+    toast('Peça marcada como paga.');
+  }
+}
+
+// ─── RELATÓRIO POR COLEÇÃO ────────────────────────────────────────
+function renderPorColecao(el){
+  const ps = pieces();
+  const colMap = {};
+  ps.forEach(p=>{
+    const c = p.colecao||'Sem coleção';
+    if(!colMap[c]) colMap[c]={total:0,pago:0,aguardando:0,diverg:0,qtd:0,pieces:[]};
+    const v = Number(p.valor||0);
+    colMap[c].total+=v; colMap[c].qtd++;
+    if(p.status==='g') colMap[c].pago+=v;
+    else if(p.status==='y') colMap[c].aguardando+=v;
+    else colMap[c].diverg+=v;
+    colMap[c].pieces.push(p);
+  });
+  el.innerHTML = Object.keys(colMap).length===0
+    ? `<div class="empty"><i class="ti ti-layers"></i><h3>Nenhuma coleção com dados</h3><p>Cadastre peças para visualizar o relatório por coleção.</p></div>`
+    : Object.entries(colMap).map(([c,d])=>`
+    <div class="panel" style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="font-family:'Playfair Display',serif;font-size:18px">${c}</div>
+        <div style="font-size:12px;color:var(--muted)">${d.qtd} ${d.qtd===1?'peça':'peças'}</div>
+      </div>
+      <div class="metrics-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="metric-card"><div class="metric-label">Total</div><div class="metric-value" style="font-size:18px">${fmtBRL(d.total)}</div></div>
+        <div class="metric-card accent-green"><div class="metric-label">Pago</div><div class="metric-value" style="font-size:18px;color:var(--g)">${fmtBRL(d.pago)}</div></div>
+        <div class="metric-card accent-yellow"><div class="metric-label">Aguardando</div><div class="metric-value" style="font-size:18px;color:var(--y)">${fmtBRL(d.aguardando)}</div></div>
+        <div class="metric-card accent-red"><div class="metric-label">Divergência</div><div class="metric-value" style="font-size:18px;color:var(--r)">${fmtBRL(d.diverg)}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+// ─── RELATÓRIO POR FORNECEDOR ─────────────────────────────────────
+function renderPorFornecedor(el){
+  const ps = pieces();
+  const fMap = {};
+  ps.forEach(p=>{
+    const f = p.fornecedor||'Sem fornecedor';
+    if(!fMap[f]) fMap[f]={total:0,pago:0,qtd:0,pendencias:0};
+    fMap[f].total+=Number(p.valor||0);
+    fMap[f].qtd++;
+    if(p.status==='g') fMap[f].pago+=Number(p.valor||0);
+    if(p.status!=='g') fMap[f].pendencias++;
+  });
+  const sorted = Object.entries(fMap).sort((a,b)=>b[1].total-a[1].total);
+  el.innerHTML = sorted.length===0
+    ? `<div class="empty"><i class="ti ti-building-store"></i><h3>Nenhum dado de fornecedor</h3><p>Cadastre peças associadas a fornecedores para visualizar o ranking.</p></div>`
+    : `<div class="list-wrap">
+    <div class="list-row list-head" style="grid-template-columns:40px 1fr 140px 140px 70px 90px">
+      <div>#</div><div>Fornecedor</div><div>Total mostruários</div><div>Total pago</div><div>Peças</div><div>Pendências</div>
+    </div>
+    ${sorted.map(([f,d],i)=>`
+    <div class="list-row" style="grid-template-columns:40px 1fr 140px 140px 70px 90px;cursor:default">
+      <div style="font-weight:600;color:var(--rose)">${i+1}</div>
+      <div style="font-weight:500">${f}</div>
+      <div style="font-weight:500">${fmtBRL(d.total)}</div>
+      <div style="color:var(--g)">${fmtBRL(d.pago)}</div>
+      <div>${d.qtd}</div>
+      <div>${d.pendencias>0?`<span style="color:var(--r);font-weight:600">${d.pendencias}</span>`:'—'}</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ─── COLEÇÕES ────────────────────────────────────────────────────
+function renderColecoes(el){
+  const cs = colecoes();
+  const ps = pieces();
+  const btnEl = document.getElementById('btn-nova-peca');
+  btnEl.innerHTML='<i class="ti ti-plus"></i> Nova coleção';
+  btnEl.style.display='';
+  btnEl.onclick = openNewColecaoModal;
+
+  el.innerHTML = cs.length===0
+    ? `<div class="empty"><i class="ti ti-tag"></i><h3>Nenhuma coleção cadastrada</h3><p>Cadastre coleções para organizar suas peças de mostruário.</p></div>`
+    : `<div class="list-wrap">
+    <div class="list-row list-head" style="grid-template-columns:1fr 80px 120px 80px">
+      <div>Coleção</div><div>Peças</div><div>Total</div><div>Ações</div>
+    </div>
+    ${cs.map(c=>{
+      const cps=ps.filter(p=>p.colecao===c.nome);
+      const total=cps.reduce((s,p)=>s+Number(p.valor||0),0);
+      return `<div class="list-row" style="grid-template-columns:1fr 80px 120px 80px;cursor:default">
+        <div style="font-weight:500">${c.nome}</div>
+        <div style="color:var(--muted)">${cps.length}</div>
+        <div style="font-weight:500">${fmtBRL(total)}</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-sm" onclick="editColecao('${c.id}')"><i class="ti ti-edit"></i></button>
+          <button class="btn btn-sm btn-danger" onclick="deleteColecao('${c.id}')"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+// ─── FORNECEDORES CAD ─────────────────────────────────────────────
+function renderFornecedoresCad(el){
+  const fs = fornecedores();
+  const ps = pieces();
+  const btnEl = document.getElementById('btn-nova-peca');
+  btnEl.innerHTML='<i class="ti ti-plus"></i> Novo fornecedor';
+  btnEl.style.display='';
+  btnEl.onclick = openNewFornecedorModal;
+
+  el.innerHTML = fs.length===0
+    ? `<div class="empty"><i class="ti ti-users"></i><h3>Nenhum fornecedor cadastrado</h3><p>Cadastre fornecedores para utilizá-los nas peças de mostruário.</p></div>`
+    : `<div class="list-wrap">
+    <div class="list-row list-head" style="grid-template-columns:1fr 160px 80px 120px 80px">
+      <div>Fornecedor</div><div>Contato</div><div>Peças</div><div>Total</div><div>Ações</div>
+    </div>
+    ${fs.map(f=>{
+      const fps=ps.filter(p=>p.fornecedor===f.nome);
+      const total=fps.reduce((s,p)=>s+Number(p.valor||0),0);
+      return `<div class="list-row" style="grid-template-columns:1fr 160px 80px 120px 80px;cursor:default">
+        <div style="font-weight:500">${f.nome}</div>
+        <div style="font-size:12px;color:var(--muted)">${f.contato||'—'}</div>
+        <div style="color:var(--muted)">${fps.length}</div>
+        <div style="font-weight:500">${fmtBRL(total)}</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-sm" onclick="editFornecedor('${f.id}')"><i class="ti ti-edit"></i></button>
+          <button class="btn btn-sm btn-danger" onclick="deleteFornecedor('${f.id}')"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+// ─── MODAL PEÇA ───────────────────────────────────────────────────
+// ─── COMBOBOX ─────────────────────────────────────────────────────
+function comboItems(type){
+  return type==='colecao'
+    ? colecoes().map(c=>c.nome)
+    : fornecedores().map(f=>f.nome);
+}
+
+function comboRender(type){
+  const inp = document.getElementById('f-'+type);
+  const drop = document.getElementById('combo-drop-'+type);
+  const q = inp.value.toLowerCase().trim();
+  const items = comboItems(type).filter(n=>!q||n.toLowerCase().includes(q));
+  let html = '';
+  if(items.length===0&&!q){
+    html += `<div class="combo-opt combo-empty">Nenhum cadastrado ainda</div>`;
+  }
+  items.forEach(n=>{
+    html += `<div class="combo-opt" onmousedown="comboSelect('${type}','${n.replace(/'/g,"\\'")}')">
+      ${n}
+    </div>`;
+  });
+  const label = type==='colecao'?'coleção':'fornecedor';
+  const newVal = inp.value.trim();
+  const alreadyExists = comboItems(type).some(n=>n.toLowerCase()===newVal.toLowerCase());
+  if(newVal && !alreadyExists){
+    html += `<div class="combo-opt combo-add" onmousedown="comboAddNew('${type}','${newVal.replace(/'/g,"\\'")}')">
+      <i class="ti ti-plus" style="font-size:14px"></i> Acrescentar "${newVal}" como nova ${label}
+    </div>`;
+  } else if(!newVal){
+    html += `<div class="combo-opt combo-add" onmousedown="comboAddNew('${type}','')">
+      <i class="ti ti-plus" style="font-size:14px"></i> Acrescentar nova ${label}
+    </div>`;
+  }
+  drop.innerHTML = html;
+}
+
+function comboOpen(type){
+  comboRender(type);
+  document.getElementById('combo-drop-'+type).classList.add('open');
+}
+
+function comboFilter(type){
+  comboRender(type);
+  document.getElementById('combo-drop-'+type).classList.add('open');
+}
+
+function comboBlur(type){
+  setTimeout(()=>document.getElementById('combo-drop-'+type).classList.remove('open'), 150);
+}
+
+function comboSelect(type, val){
+  document.getElementById('f-'+type).value = val;
+  document.getElementById('combo-drop-'+type).classList.remove('open');
+}
+
+function comboAddNew(type, prefill){
+  if(type==='colecao'){
+    document.getElementById('colecao-edit-id').value='';
+    document.getElementById('modal-colecao-title').textContent='Nova coleção';
+    document.getElementById('colecao-nome').value=prefill||'';
+    document.getElementById('combo-drop-colecao').classList.remove('open');
+    document.getElementById('modal-colecao').classList.add('open');
+    window._comboCallbackType='colecao';
+  } else {
+    document.getElementById('forn-edit-id').value='';
+    document.getElementById('modal-forn-title').textContent='Novo fornecedor';
+    document.getElementById('forn-nome').value=prefill||'';
+    document.getElementById('forn-contato').value='';
+    document.getElementById('combo-drop-fornecedor').classList.remove('open');
+    document.getElementById('modal-fornecedor').classList.add('open');
+    window._comboCallbackType='fornecedor';
+  }
+}
+
+function populateSelects(){
+  // no-op: combos are dynamic, no pre-fill needed here
+}
+
+function openNewPieceModal(){
+  editingId = null;
+  photoData = null;
+  document.getElementById('modal-piece-title').textContent = 'Cadastrar peça';
+  document.getElementById('piece-id').value = '';
+  ['ref','colecao','fornecedor','categoria','tamanho','data','responsavel','nfe','romaneio','valor','data-pag','obs'].forEach(f=>{
+    const el = document.getElementById('f-'+f);
+    if(el) el.value='';
+  });
+  document.getElementById('photo-preview').style.display='none';
+  document.getElementById('photo-zone').style.display='';
+  selectedStatus='y';
+  refreshStatusOpts();
+  populateSelects();
+  document.getElementById('modal-piece').classList.add('open');
+}
+
+function editPiece(id){
+  const p = pieces().find(x=>x.id===id);
+  if(!p) return;
+  editingId = id;
+  photoData = p.photo||null;
+  document.getElementById('modal-piece-title').textContent = 'Editar peça';
+  document.getElementById('piece-id').value = id;
+  document.getElementById('f-ref').value = p.ref||'';
+  document.getElementById('f-tamanho').value = p.tamanho||'';
+  document.getElementById('f-data').value = p.data||'';
+  document.getElementById('f-responsavel').value = p.responsavel||'';
+  document.getElementById('f-nfe').value = p.nfe||'';
+  document.getElementById('f-romaneio').value = p.romaneio||'';
+  document.getElementById('f-valor').value = p.valor||'';
+  document.getElementById('f-data-pag').value = p.dataPag||'';
+  document.getElementById('f-obs').value = p.obs||'';
+  if(p.photo){
+    const prev = document.getElementById('photo-preview');
+    prev.src = p.photo; prev.style.display='block';
+    document.getElementById('photo-zone').style.display='none';
+  } else {
+    document.getElementById('photo-preview').style.display='none';
+    document.getElementById('photo-zone').style.display='';
+  }
+  selectedStatus = p.status||'y';
+  refreshStatusOpts();
+  populateSelects();
+  document.getElementById('f-colecao').value = p.colecao||'';
+  document.getElementById('f-fornecedor').value = p.fornecedor||'';
+  document.getElementById('f-categoria').value = p.categoria||'';
+  closeModal('modal-detail');
+  document.getElementById('modal-piece').classList.add('open');
+}
+
+function handlePhotoUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    photoData = ev.target.result;
+    const prev = document.getElementById('photo-preview');
+    prev.src = photoData; prev.style.display='block';
+    document.getElementById('photo-zone').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function selectStatus(s){
+  selectedStatus = s;
+  refreshStatusOpts();
+}
+
+function refreshStatusOpts(){
+  ['g','y','r'].forEach(s=>{
+    const el = document.getElementById('sopt-'+s);
+    el.className = 'sopt' + (selectedStatus===s?' sel-'+s:'');
+  });
+}
+
+function savePiece(){
+  const ref = document.getElementById('f-ref').value.trim();
+  const colecao = document.getElementById('f-colecao').value.trim();
+  const fornecedor = document.getElementById('f-fornecedor').value.trim();
+  const data = document.getElementById('f-data').value;
+
+  const ps = pieces();
+  const now = new Date().toISOString();
+  if(editingId){
+    const idx = ps.findIndex(p=>p.id===editingId);
+    if(idx>=0){
+      const old = ps[idx];
+      ps[idx] = {
+        ...old,
+        ref, colecao, fornecedor,
+        categoria: document.getElementById('f-categoria').value,
+        tamanho: document.getElementById('f-tamanho').value,
+        data,
+        responsavel: document.getElementById('f-responsavel').value,
+        nfe: document.getElementById('f-nfe').value,
+        romaneio: document.getElementById('f-romaneio').value,
+        valor: document.getElementById('f-valor').value,
+        dataPag: document.getElementById('f-data-pag').value,
+        obs: document.getElementById('f-obs').value,
+        status: selectedStatus,
+        photo: photoData,
+        history: [...(old.history||[]), {action:'Peça editada', date:now}]
+      };
+    }
+  } else {
+    ps.push({
+      id: uid(),
+      ref, colecao, fornecedor,
+      categoria: document.getElementById('f-categoria').value,
+      tamanho: document.getElementById('f-tamanho').value,
+      data,
+      responsavel: document.getElementById('f-responsavel').value,
+      nfe: document.getElementById('f-nfe').value,
+      romaneio: document.getElementById('f-romaneio').value,
+      valor: document.getElementById('f-valor').value,
+      dataPag: document.getElementById('f-data-pag').value,
+      obs: document.getElementById('f-obs').value,
+      status: selectedStatus,
+      photo: photoData,
+      history: [{action:'Peça cadastrada', date:now}]
+    });
+  }
+  DB.set('pieces', ps);
+  closeModal('modal-piece');
+  updateAlertBadge();
+  render();
+  toast(editingId ? 'Peça atualizada com sucesso.' : 'Peça cadastrada com sucesso.');
+}
+
+// ─── DETALHE ──────────────────────────────────────────────────────
+function openDetail(id){
+  const p = pieces().find(x=>x.id===id);
+  if(!p) return;
+  detailId = id;
+  document.getElementById('detail-title').textContent = p.ref||'Detalhe da peça';
+  document.getElementById('btn-delete-piece').onclick = ()=>{ closeModal('modal-detail'); setTimeout(()=>openConfirm(id),100); };
+  document.getElementById('btn-edit-piece').onclick = ()=>editPiece(id);
+
+  document.getElementById('detail-body').innerHTML = `
+    <div class="detail-grid">
+      <div>
+        ${p.photo
+          ? `<img class="detail-photo-img" src="${p.photo}" alt="${p.ref}">`
+          : `<div class="detail-photo-ph"><i class="ti ${getCatIcon(p.categoria)}"></i><span style="font-size:12px;color:var(--muted)">${p.categoria||'Sem foto'}</span></div>`
+        }
+      </div>
+      <div class="detail-fields">
+        <div style="margin-bottom:4px"><span class="tag tag-${p.status}"><div class="dot dot-${p.status}" style="width:7px;height:7px"></div>${statusLabel[p.status]}</span></div>
+        ${field('Referência', p.ref)}
+        ${field('Coleção', p.colecao)}
+        ${field('Fornecedor', p.fornecedor)}
+        ${field('Categoria', p.categoria)}
+        ${field('Tamanho', p.tamanho)}
+        ${field('Data de recebimento', fmtDate(p.data))}
+        ${field('Responsável', p.responsavel)}
+        ${field('NF-e', p.nfe)}
+        ${field('Romaneio', p.romaneio)}
+        ${field('Valor cobrado', fmtBRL(p.valor))}
+        ${field('Data de pagamento', fmtDate(p.dataPag))}
+        ${p.obs?field('Observações', p.obs):''}
+      </div>
+    </div>
+    ${p.history&&p.history.length?`
+    <div style="margin-top:20px;border-top:0.5px solid var(--border);padding-top:16px">
+      <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">Histórico</div>
+      ${[...p.history].reverse().map(h=>`<div class="history-item"><div class="history-time">${new Date(h.date).toLocaleString('pt-BR')}</div><div class="history-text">${h.action}</div></div>`).join('')}
+    </div>`:''}
+  `;
+  document.getElementById('modal-detail').classList.add('open');
+}
+
+function field(label, value){
+  if(!value||value==='—') return '';
+  return `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`;
+}
+
+function editFromDetail(){
+  editPiece(detailId);
+}
+
+// ─── DELETE ───────────────────────────────────────────────────────
+let deleteId = null;
+function openConfirm(id){ deleteId=id; document.getElementById('modal-confirm').classList.add('open'); }
+function confirmDelete(){ openConfirm(detailId); closeModal('modal-detail'); }
+function deletePiece(){
+  if(!deleteId) return;
+  const ps = pieces().filter(p=>p.id!==deleteId);
+  DB.set('pieces',ps);
+  closeModal('modal-confirm');
+  updateAlertBadge();
+  render();
+  toast('Peça excluída.');
+  deleteId=null;
+}
+
+// ─── COLEÇÕES CRUD ────────────────────────────────────────────────
+function openNewColecaoModal(){
+  document.getElementById('modal-colecao-title').textContent='Nova coleção';
+  document.getElementById('colecao-edit-id').value='';
+  document.getElementById('colecao-nome').value='';
+  document.getElementById('modal-colecao').classList.add('open');
+}
+function editColecao(id){
+  const c = colecoes().find(x=>x.id===id);
+  if(!c) return;
+  document.getElementById('modal-colecao-title').textContent='Editar coleção';
+  document.getElementById('colecao-edit-id').value=id;
+  document.getElementById('colecao-nome').value=c.nome;
+  document.getElementById('modal-colecao').classList.add('open');
+}
+function saveColecao(){
+  const nome = document.getElementById('colecao-nome').value.trim();
+  if(!nome){ toast('Informe o nome da coleção.','err'); return; }
+  const id = document.getElementById('colecao-edit-id').value;
+  const cs = colecoes();
+  if(id){ const idx=cs.findIndex(c=>c.id===id); if(idx>=0) cs[idx].nome=nome; }
+  else cs.push({id:uid(),nome});
+  DB.set('colecoes',cs);
+  closeModal('modal-colecao');
+  if(window._comboCallbackType==='colecao'){
+    document.getElementById('f-colecao').value=nome;
+    window._comboCallbackType=null;
+  }
+  if(currentPage==='colecoes') render();
+  toast(id?'Coleção atualizada.':'Coleção criada.');
+}
+function deleteColecao(id){
+  if(!confirm('Excluir esta coleção? As peças associadas não serão excluídas.')) return;
+  DB.set('colecoes', colecoes().filter(c=>c.id!==id));
+  render(); toast('Coleção excluída.');
+}
+
+// ─── FORNECEDORES CRUD ────────────────────────────────────────────
+function openNewFornecedorModal(){
+  document.getElementById('modal-forn-title').textContent='Novo fornecedor';
+  document.getElementById('forn-edit-id').value='';
+  document.getElementById('forn-nome').value='';
+  document.getElementById('forn-contato').value='';
+  document.getElementById('modal-fornecedor').classList.add('open');
+}
+function editFornecedor(id){
+  const f = fornecedores().find(x=>x.id===id);
+  if(!f) return;
+  document.getElementById('modal-forn-title').textContent='Editar fornecedor';
+  document.getElementById('forn-edit-id').value=id;
+  document.getElementById('forn-nome').value=f.nome;
+  document.getElementById('forn-contato').value=f.contato||'';
+  document.getElementById('modal-fornecedor').classList.add('open');
+}
+function saveFornecedor(){
+  const nome = document.getElementById('forn-nome').value.trim();
+  if(!nome){ toast('Informe o nome do fornecedor.','err'); return; }
+  const id = document.getElementById('forn-edit-id').value;
+  const fs = fornecedores();
+  if(id){ const idx=fs.findIndex(f=>f.id===id); if(idx>=0){ fs[idx].nome=nome; fs[idx].contato=document.getElementById('forn-contato').value; } }
+  else fs.push({id:uid(),nome,contato:document.getElementById('forn-contato').value});
+  DB.set('fornecedores',fs);
+  closeModal('modal-fornecedor');
+  if(window._comboCallbackType==='fornecedor'){
+    document.getElementById('f-fornecedor').value=nome;
+    window._comboCallbackType=null;
+  }
+  if(currentPage==='fornecedores-cad') render();
+  toast(id?'Fornecedor atualizado.':'Fornecedor cadastrado.');
+}
+function deleteFornecedor(id){
+  if(!confirm('Excluir este fornecedor? As peças associadas não serão excluídas.')) return;
+  DB.set('fornecedores', fornecedores().filter(f=>f.id!==id));
+  render(); toast('Fornecedor excluído.');
+}
+
+// ─── MODAL UTILS ──────────────────────────────────────────────────
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.overlay').forEach(ov=>{
+  ov.addEventListener('click',e=>{ if(e.target===ov) ov.classList.remove('open'); });
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open')); });
+
+// ─── EXPORT (placeholder — a implementar com SheetJS/jsPDF) ───────
+function exportExcel(){ alert('Exportação para Excel será implementada na versão com backend.\n\nEsta funcionalidade usa a biblioteca SheetJS e gera um arquivo .xlsx completo com filtros e tabelas.'); }
+function exportPDF(){ alert('Exportação para PDF será implementada na versão com backend.\n\nEsta funcionalidade usa a biblioteca jsPDF e gera relatório formatado com logo da Norah.'); }
+
+// ─── RESET (botão oculto para debug) ──────────────────────────────
+window.resetAll = function(){ if(confirm('Apagar TODOS os dados? Esta ação não pode ser desfeita.')){ localStorage.clear(); DB.init(); updateAlertBadge(); render(); toast('Dados apagados.'); } }
+
+// ─── INIT ─────────────────────────────────────────────────────────
+updateAlertBadge();
+render();
+</script>
+</body>
+</html>
